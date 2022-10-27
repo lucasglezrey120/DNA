@@ -1,9 +1,8 @@
 from re import A
 
-
 dna = input('enter a DNA template: ')
 #'TTAACTGACGCTTGACATAGCTGATG'
-      #caucagcuAUGUCAAGCGUCAGUUAA
+ #caucagcuAUGUCAAGCGUCAGUUAA
 
 def comp_strand(query):
     query = query.upper()
@@ -17,10 +16,11 @@ def comp_strand(query):
             comp += 'G'
         elif letter == 'G':
             comp += 'C'
+    print("       3' end " + comp + " 5' end")
     return (comp[::-1])
 
 def transcribe(template):
-    coding=template.replace('T', 'U')
+    coding = template.replace('T', 'U')
     rna = ''; b=0
     exon = False
     while(b < len(coding)):
@@ -37,7 +37,6 @@ def transcribe(template):
     mrna = ''
     for i in range(len(rna)-2):
         if (rna[i:i+3] == 'uag' or rna[i:i+3] == 'uga' or rna[i:i+3] == 'uaa') and rna[i-1].isupper():
-            print(rna[i:i+3].upper())
             mrna += rna[i:i+3].upper()
             i+=2
         else:
@@ -90,16 +89,16 @@ def translate(rna):
             elif rna[nt+1:nt+3] == 'UC' or rna[nt+1:nt+3] == 'UU': codons += ('Phe')
     return codons
 
-print(' DNA template '+ dna)
+print("  Template 5' "+ dna + " 3' end")
 
 complement = comp_strand(dna)
-print('Coding strand ' + complement)
+print("    Coding 5' " + complement + " 3' end")
 
 mRNA = transcribe(complement)
 print('Transcipt seq ' + mRNA)
 
 mature = splice(mRNA)
-print('  Spliced seq ' + mature)
+print('   Coding seq ' + mature)
 
 proteins = translate(mature)
 print('  Protein seq ' + proteins)
